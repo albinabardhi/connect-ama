@@ -6,435 +6,184 @@
   <title>Hornbill Automation Maturity Self-Assessment</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --teal: #028090;
-      --teal-light: #00A896;
-      --orange: #F27A22;
-      --dark-bg: #0D2B3E;
-      --mid-bg: #1A4A5E;
-      --cream: #F5F2ED;
-      --white: #FFFFFF;
-      --charcoal: #1E2D3A;
-      --slate: #4A6070;
-      --muted: #7A9BAE;
-      --border: #D8D4CE;
-      --card-bg: #EEF4F7;
-      --s1-bg: #F1EFE8; --s1-border: #B4B2A9; --s1-text: #444441;
-      --s2-bg: #E6F1FB; --s2-border: #85B7EB; --s2-text: #0C447C;
-      --s3-bg: #EAF3DE; --s3-border: #97C459; --s3-text: #27500A;
-      --s4-bg: #FAEEDA; --s4-border: #EF9F27; --s4-text: #633806;
-      --s5-bg: #EEEDFE; --s5-border: #AFA9EC; --s5-text: #3C3489;
-      --radius: 10px;
-      --radius-sm: 6px;
+      --teal: #028090; --teal-light: #00A896; --orange: #F27A22;
+      --dark-bg: #0D2B3E; --mid-bg: #1A4A5E; --cream: #F5F2ED;
+      --white: #FFFFFF; --charcoal: #1E2D3A; --slate: #4A6070; --muted: #7A9BAE;
+      --border: #D8D4CE; --card-bg: #EEF4F7;
+      --s1-bg:#F1EFE8;--s1-bd:#B4B2A9;--s1-t:#444441;--s1-bar:#B4B2A9;
+      --s2-bg:#E6F1FB;--s2-bd:#85B7EB;--s2-t:#0C447C;--s2-bar:#85B7EB;
+      --s3-bg:#EAF3DE;--s3-bd:#97C459;--s3-t:#27500A;--s3-bar:#97C459;
+      --s4-bg:#FAEEDA;--s4-bd:#EF9F27;--s4-t:#633806;--s4-bar:#EF9F27;
+      --s5-bg:#EEEDFE;--s5-bd:#AFA9EC;--s5-t:#3C3489;--s5-bar:#AFA9EC;
+      --radius:10px; --radius-sm:6px;
     }
+    body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--cream); color:var(--charcoal); min-height:100vh; line-height:1.6; }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: var(--cream);
-      color: var(--charcoal);
-      min-height: 100vh;
-      line-height: 1.6;
-    }
+    .site-header { background:var(--dark-bg); }
+    .header-inner { max-width:940px; margin:0 auto; padding:28px 24px 24px; display:flex; align-items:flex-start; gap:20px; }
+    .header-accent { width:4px; height:64px; background:var(--orange); border-radius:2px; flex-shrink:0; margin-top:2px; }
+    .header-text h1 { font-size:26px; font-weight:700; color:var(--white); letter-spacing:-0.3px; line-height:1.2; }
+    .header-text p { font-size:14px; color:var(--muted); margin-top:6px; }
+    .header-right { margin-left:auto; display:flex; flex-direction:column; align-items:flex-end; gap:8px; flex-shrink:0; }
+    .header-badge { background:var(--mid-bg); border:1px solid #2a5f76; border-radius:var(--radius-sm); padding:6px 14px; font-size:12px; color:var(--muted); font-weight:500; }
+    .live-badge { background:#0f4a1a; border:1px solid #1a7a2a; border-radius:var(--radius-sm); padding:5px 12px; font-size:11px; color:#4ade80; font-weight:600; display:flex; align-items:center; gap:6px; }
+    .live-dot { width:7px; height:7px; border-radius:50%; background:#4ade80; animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
 
-    /* ── Header ── */
-    .site-header {
-      background: var(--dark-bg);
-      padding: 0;
-    }
-    .header-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 28px 24px 24px;
-      display: flex;
-      align-items: flex-start;
-      gap: 20px;
-    }
-    .header-accent {
-      width: 4px;
-      height: 64px;
-      background: var(--orange);
-      border-radius: 2px;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .header-text h1 {
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--white);
-      letter-spacing: -0.3px;
-      line-height: 1.2;
-    }
-    .header-text p {
-      font-size: 14px;
-      color: var(--muted);
-      margin-top: 6px;
-    }
-    .header-badge {
-      margin-left: auto;
-      flex-shrink: 0;
-      background: var(--mid-bg);
-      border: 1px solid #2a5f76;
-      border-radius: var(--radius-sm);
-      padding: 6px 14px;
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 500;
-    }
+    .main { max-width:940px; margin:0 auto; padding:32px 24px 60px; }
 
-    /* ── Layout ── */
-    .main {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 32px 24px 60px;
-    }
+    .name-section { background:var(--white); border:1.5px solid var(--border); border-radius:var(--radius); padding:18px 22px; margin-bottom:24px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+    .name-section label { font-size:14px; font-weight:600; color:var(--charcoal); white-space:nowrap; }
+    .name-section input { flex:1; min-width:200px; font-size:14px; padding:8px 14px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:inherit; color:var(--charcoal); background:var(--cream); transition:border-color 0.15s; }
+    .name-section input:focus { outline:none; border-color:var(--teal); }
+    .name-hint { font-size:12px; color:var(--muted); }
 
-    /* ── Tabs ── */
-    .tabs {
-      display: flex;
-      gap: 2px;
-      border-bottom: 2px solid var(--border);
-      margin-bottom: 28px;
-    }
-    .tab {
-      font-size: 14px;
-      font-weight: 500;
-      padding: 10px 20px;
-      cursor: pointer;
-      color: var(--slate);
-      border-bottom: 3px solid transparent;
-      margin-bottom: -2px;
-      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-      transition: color 0.15s, border-color 0.15s;
-      background: none;
-      border-top: none;
-      border-left: none;
-      border-right: none;
-      font-family: inherit;
-    }
-    .tab:hover { color: var(--charcoal); background: rgba(0,0,0,0.03); }
-    .tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+    .tabs { display:flex; gap:2px; border-bottom:2px solid var(--border); margin-bottom:28px; flex-wrap:wrap; }
+    .tab { font-size:14px; font-weight:500; padding:10px 18px; cursor:pointer; color:var(--slate); border-bottom:3px solid transparent; margin-bottom:-2px; background:none; border-top:none; border-left:none; border-right:none; font-family:inherit; border-radius:var(--radius-sm) var(--radius-sm) 0 0; transition:color 0.15s; }
+    .tab:hover { color:var(--charcoal); background:rgba(0,0,0,0.03); }
+    .tab.active { color:var(--teal); border-bottom-color:var(--teal); }
+    .tab-badge { display:inline-block; background:var(--teal); color:white; border-radius:10px; font-size:10px; font-weight:700; padding:1px 6px; margin-left:5px; vertical-align:middle; }
 
-    .view { display: none; }
-    .view.active { display: block; }
+    .view { display:none; }
+    .view.active { display:block; }
 
-    /* ── Instruction box ── */
-    .instruction-box {
-      background: #E6F4F7;
-      border-left: 4px solid var(--teal);
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      padding: 12px 16px;
-      margin-bottom: 24px;
-      font-size: 13px;
-      color: var(--slate);
-      line-height: 1.6;
-    }
+    .instruction-box { background:#E6F4F7; border-left:4px solid var(--teal); border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:12px 16px; margin-bottom:24px; font-size:13px; color:var(--slate); line-height:1.6; }
 
-    /* ── Stage legend ── */
-    .stage-legend {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 24px;
-    }
-    .stage-pill {
-      font-size: 12px;
-      font-weight: 500;
-      padding: 5px 12px;
-      border-radius: 20px;
-      border: 1.5px solid transparent;
-    }
-    .sp-1 { background: var(--s1-bg); color: var(--s1-text); border-color: var(--s1-border); }
-    .sp-2 { background: var(--s2-bg); color: var(--s2-text); border-color: var(--s2-border); }
-    .sp-3 { background: var(--s3-bg); color: var(--s3-text); border-color: var(--s3-border); }
-    .sp-4 { background: var(--s4-bg); color: var(--s4-text); border-color: var(--s4-border); }
-    .sp-5 { background: var(--s5-bg); color: var(--s5-text); border-color: var(--s5-border); }
+    .stage-legend { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
+    .stage-pill { font-size:12px; font-weight:500; padding:5px 12px; border-radius:20px; border:1.5px solid transparent; }
+    .sp-1{background:var(--s1-bg);color:var(--s1-t);border-color:var(--s1-bd);}
+    .sp-2{background:var(--s2-bg);color:var(--s2-t);border-color:var(--s2-bd);}
+    .sp-3{background:var(--s3-bg);color:var(--s3-t);border-color:var(--s3-bd);}
+    .sp-4{background:var(--s4-bg);color:var(--s4-t);border-color:var(--s4-bd);}
+    .sp-5{background:var(--s5-bg);color:var(--s5-t);border-color:var(--s5-bd);}
 
-    /* ── Grid header ── */
-    .grid-header {
-      display: grid;
-      grid-template-columns: 200px repeat(5, 1fr);
-      gap: 6px;
-      margin-bottom: 8px;
-      padding: 0 2px;
-    }
-    .gh-stage {
-      font-size: 11px;
-      font-weight: 600;
-      text-align: center;
-      padding: 7px 4px;
-      border-radius: var(--radius-sm);
-      line-height: 1.3;
-    }
+    .grid-header { display:grid; grid-template-columns:210px repeat(5,1fr); gap:6px; margin-bottom:8px; }
+    .gh-stage { font-size:11px; font-weight:600; text-align:center; padding:7px 4px; border-radius:var(--radius-sm); line-height:1.3; }
+    .process-row { display:grid; grid-template-columns:210px repeat(5,1fr); gap:6px; margin-bottom:8px; align-items:center; }
+    .process-name { font-size:13px; font-weight:600; color:var(--charcoal); padding:8px 6px; }
+    .process-sub { font-size:11px; color:var(--slate); font-weight:400; margin-top:2px; }
+    .score-cell { display:flex; align-items:center; justify-content:center; height:46px; border-radius:var(--radius-sm); border:1.5px solid var(--border); cursor:pointer; transition:all 0.15s; background:var(--white); font-size:13px; color:var(--muted); user-select:none; }
+    .score-cell:hover { border-color:var(--teal); background:#f0fafc; }
+    .sel-1{background:var(--s1-bg);border-color:var(--s1-bd);color:var(--s1-t);font-weight:600;}
+    .sel-2{background:var(--s2-bg);border-color:var(--s2-bd);color:var(--s2-t);font-weight:600;}
+    .sel-3{background:var(--s3-bg);border-color:var(--s3-bd);color:var(--s3-t);font-weight:600;}
+    .sel-4{background:var(--s4-bg);border-color:var(--s4-bd);color:var(--s4-t);font-weight:600;}
+    .sel-5{background:var(--s5-bg);border-color:var(--s5-bd);color:var(--s5-t);font-weight:600;}
 
-    /* ── Process rows ── */
-    .process-row {
-      display: grid;
-      grid-template-columns: 200px repeat(5, 1fr);
-      gap: 6px;
-      margin-bottom: 8px;
-      align-items: center;
-    }
-    .process-name {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--charcoal);
-      padding: 8px 6px;
-    }
-    .process-sub {
-      font-size: 11px;
-      color: var(--slate);
-      font-weight: 400;
-      margin-top: 2px;
-    }
-    .score-cell {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 46px;
-      border-radius: var(--radius-sm);
-      border: 1.5px solid var(--border);
-      cursor: pointer;
-      transition: all 0.15s;
-      background: var(--white);
-      font-size: 13px;
-      color: var(--muted);
-      user-select: none;
-    }
-    .score-cell:hover { border-color: var(--teal); background: #f0fafc; }
-    .score-cell.sel-1 { background: var(--s1-bg); border-color: var(--s1-border); color: var(--s1-text); font-weight: 600; }
-    .score-cell.sel-2 { background: var(--s2-bg); border-color: var(--s2-border); color: var(--s2-text); font-weight: 600; }
-    .score-cell.sel-3 { background: var(--s3-bg); border-color: var(--s3-border); color: var(--s3-text); font-weight: 600; }
-    .score-cell.sel-4 { background: var(--s4-bg); border-color: var(--s4-border); color: var(--s4-text); font-weight: 600; }
-    .score-cell.sel-5 { background: var(--s5-bg); border-color: var(--s5-border); color: var(--s5-text); font-weight: 600; }
+    .divider { height:1px; background:var(--border); margin:24px 0; }
+    .note-area label { font-size:13px; color:var(--slate); display:block; margin-bottom:8px; font-weight:500; }
+    .note-area textarea { width:100%; min-height:90px; font-size:13px; resize:vertical; font-family:inherit; color:var(--charcoal); background:var(--white); border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:10px 14px; line-height:1.5; transition:border-color 0.15s; }
+    .note-area textarea:focus { outline:none; border-color:var(--teal); }
 
-    .divider { height: 1px; background: var(--border); margin: 24px 0; }
+    .btn-row { display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; align-items:center; }
+    .btn { font-size:14px; padding:10px 20px; border-radius:var(--radius-sm); border:1.5px solid var(--border); background:var(--white); color:var(--charcoal); cursor:pointer; font-family:inherit; font-weight:500; transition:background 0.15s,border-color 0.15s; }
+    .btn:hover { background:var(--card-bg); border-color:var(--teal); }
+    .btn:disabled { opacity:0.5; cursor:not-allowed; }
+    .btn-primary { background:var(--teal); color:var(--white); border-color:var(--teal); }
+    .btn-primary:hover { background:#016c77; }
+    .btn-orange { background:var(--orange); color:var(--white); border-color:var(--orange); }
+    .btn-orange:hover { background:#d96a15; }
+    .btn-ghost { color:var(--slate); }
+    .btn-sm { font-size:12px; padding:6px 14px; }
+    .save-status { font-size:12px; color:var(--muted); font-style:italic; }
+    .save-status.saved { color:#27500A; font-style:normal; }
+    .save-status.saving { color:var(--orange); }
 
-    /* ── Notes area ── */
-    .note-area label {
-      font-size: 13px;
-      color: var(--slate);
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 500;
-    }
-    .note-area textarea {
-      width: 100%;
-      min-height: 90px;
-      font-size: 13px;
-      resize: vertical;
-      font-family: inherit;
-      color: var(--charcoal);
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 10px 14px;
-      line-height: 1.5;
-      transition: border-color 0.15s;
-    }
-    .note-area textarea:focus { outline: none; border-color: var(--teal); }
+    .results-title { font-size:16px; font-weight:600; color:var(--charcoal); margin-bottom:16px; }
+    .summary-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:28px; }
+    .metric-card { background:var(--card-bg); border-radius:var(--radius); padding:16px 18px; border:1px solid var(--border); }
+    .metric-label { font-size:12px; color:var(--slate); margin-bottom:6px; }
+    .metric-value { font-size:28px; font-weight:700; color:var(--charcoal); }
+    .metric-sub { font-size:11px; color:var(--muted); margin-top:3px; }
 
-    /* ── Buttons ── */
-    .btn-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
-    .btn {
-      font-size: 14px;
-      padding: 10px 20px;
-      border-radius: var(--radius-sm);
-      border: 1.5px solid var(--border);
-      background: var(--white);
-      color: var(--charcoal);
-      cursor: pointer;
-      font-family: inherit;
-      font-weight: 500;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .btn:hover { background: var(--card-bg); border-color: var(--teal); }
-    .btn-primary { background: var(--teal); color: var(--white); border-color: var(--teal); }
-    .btn-primary:hover { background: #016c77; border-color: #016c77; }
-    .btn-ghost { color: var(--slate); }
+    .heatmap { margin-bottom:28px; }
+    .heatmap-row { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+    .heatmap-label { font-size:13px; color:var(--slate); width:170px; flex-shrink:0; }
+    .heatmap-track { flex:1; height:30px; background:var(--card-bg); border-radius:var(--radius-sm); overflow:hidden; border:1px solid var(--border); }
+    .heatmap-fill { height:100%; border-radius:var(--radius-sm); display:flex; align-items:center; padding-left:10px; font-size:12px; font-weight:600; min-width:40px; transition:width 0.4s; }
+    .heatmap-score { font-size:12px; color:var(--slate); width:58px; text-align:right; flex-shrink:0; }
 
-    /* ── Results ── */
-    .results-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--charcoal);
-      margin-bottom: 16px;
-    }
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-    .metric-card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      padding: 16px 18px;
-      border: 1px solid var(--border);
-    }
-    .metric-label { font-size: 12px; color: var(--slate); margin-bottom: 6px; }
-    .metric-value { font-size: 28px; font-weight: 700; color: var(--charcoal); }
-    .metric-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+    .focus-section { margin-bottom:20px; }
+    .focus-title { font-size:14px; font-weight:600; color:var(--charcoal); margin-bottom:10px; }
+    .focus-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); }
+    .focus-row:last-child { border-bottom:none; }
+    .focus-proc { font-size:13px; color:var(--charcoal); }
+    .focus-proc span { font-size:11px; color:var(--muted); }
+    .focus-badge { font-size:11px; padding:4px 10px; border-radius:12px; font-weight:500; }
+    .badge-high{background:var(--s4-bg);color:var(--s4-t);border:1px solid var(--s4-bd);}
+    .badge-med{background:var(--s2-bg);color:var(--s2-t);border:1px solid var(--s2-bd);}
+    .badge-good{background:var(--s3-bg);color:var(--s3-t);border:1px solid var(--s3-bd);}
 
-    .heatmap { margin-bottom: 28px; }
-    .heatmap-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-    .heatmap-label { font-size: 13px; color: var(--slate); width: 160px; flex-shrink: 0; }
-    .heatmap-track {
-      flex: 1;
-      height: 30px;
-      background: var(--card-bg);
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      border: 1px solid var(--border);
-    }
-    .heatmap-fill {
-      height: 100%;
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      padding-left: 10px;
-      font-size: 12px;
-      font-weight: 600;
-      min-width: 40px;
-      transition: width 0.4s ease;
-    }
-    .heatmap-score { font-size: 12px; color: var(--slate); width: 58px; text-align: right; flex-shrink: 0; }
+    /* Group heatmap */
+    .group-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:12px; }
+    .group-header-left h2 { font-size:18px; font-weight:600; color:var(--charcoal); }
+    .group-header-left p { font-size:13px; color:var(--muted); margin-top:3px; }
+    .participant-count { background:var(--teal); color:white; border-radius:20px; padding:5px 14px; font-size:13px; font-weight:600; }
 
-    .focus-section { margin-bottom: 20px; }
-    .focus-title { font-size: 14px; font-weight: 600; color: var(--charcoal); margin-bottom: 10px; }
-    .focus-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .focus-row:last-child { border-bottom: none; }
-    .focus-proc { font-size: 13px; color: var(--charcoal); }
-    .focus-proc span { font-size: 11px; color: var(--muted); }
-    .focus-badge { font-size: 11px; padding: 4px 10px; border-radius: 12px; font-weight: 500; }
-    .badge-high { background: var(--s4-bg); color: var(--s4-text); border: 1px solid var(--s4-border); }
-    .badge-med  { background: var(--s2-bg); color: var(--s2-text); border: 1px solid var(--s2-border); }
-    .badge-good { background: var(--s3-bg); color: var(--s3-text); border: 1px solid var(--s3-border); }
+    .insight-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-bottom:24px; }
+    .insight-card { background:var(--white); border:1.5px solid var(--border); border-radius:var(--radius); padding:16px 18px; }
+    .insight-card.highlight { border-color:var(--teal); }
+    .insight-label { font-size:11px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:6px; }
+    .insight-value { font-size:28px; font-weight:700; color:var(--charcoal); }
+    .insight-value.teal { color:var(--teal); }
+    .insight-value.sm { font-size:16px; margin-top:4px; }
+    .insight-sub { font-size:12px; color:var(--slate); margin-top:3px; }
 
-    .notes-display {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px;
-      font-size: 13px;
-      color: var(--slate);
-      line-height: 1.6;
-      white-space: pre-wrap;
-      margin-top: 8px;
-    }
+    .group-table { width:100%; border-collapse:collapse; margin-bottom:28px; font-size:13px; }
+    .group-table th { font-size:11px; font-weight:600; color:var(--muted); text-align:center; padding:6px 4px; border-bottom:1px solid var(--border); }
+    .group-table th.left { text-align:left; padding-left:0; }
+    .group-table td { padding:8px 4px; border-bottom:1px solid var(--border); vertical-align:middle; }
+    .group-table td.proc { font-weight:500; color:var(--charcoal); padding-left:0; white-space:nowrap; }
+    .group-table td.avg { text-align:center; }
+    .avg-pill { display:inline-block; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700; }
 
-    .incomplete-msg {
-      font-size: 14px;
-      color: var(--muted);
-      padding: 40px 0;
-      text-align: center;
-    }
+    .dist-wrap { display:flex; height:24px; border-radius:4px; overflow:hidden; border:1px solid var(--border); }
+    .dist-seg { height:100%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; overflow:hidden; transition:width 0.4s; }
 
-    /* ── Guide tab ── */
-    .stage-guide-row {
-      display: grid;
-      grid-template-columns: 100px 1fr;
-      gap: 16px;
-      align-items: start;
-      margin-bottom: 16px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border);
-    }
-    .stage-guide-row:last-child { border-bottom: none; }
-    .stage-badge-lg {
-      font-size: 12px;
-      font-weight: 600;
-      padding: 6px 10px;
-      border-radius: var(--radius-sm);
-      text-align: center;
-      border: 1.5px solid transparent;
-    }
-    .stage-guide-desc strong { font-weight: 600; }
-    .stage-guide-desc { font-size: 13px; color: var(--slate); line-height: 1.7; }
+    .p-cards { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
+    .p-card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius-sm); padding:8px 14px; }
+    .p-name { font-size:13px; font-weight:600; color:var(--charcoal); }
+    .p-avg { font-size:12px; color:var(--muted); margin-top:2px; }
+    .p-avg b { color:var(--teal); }
 
-    .signal-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 8px;
-      margin-top: 10px;
-    }
-    .signal-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 10px 14px;
-      font-size: 12px;
-      color: var(--slate);
-    }
-    .signal-card strong { display: block; font-size: 11px; font-weight: 600; color: var(--charcoal); margin-bottom: 4px; }
+    .refresh-bar { display:flex; align-items:center; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
+    .last-refresh { font-size:12px; color:var(--muted); }
+    .spinner { display:inline-block; width:12px; height:12px; border:2px solid var(--border); border-top-color:var(--teal); border-radius:50%; animation:spin 0.8s linear infinite; vertical-align:middle; margin-right:4px; }
+    @keyframes spin { to{transform:rotate(360deg)} }
 
-    /* ── Print / export hint ── */
-    .export-bar {
-      background: var(--dark-bg);
-      border-radius: var(--radius);
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 28px;
-      flex-wrap: wrap;
-    }
-    .export-bar p { font-size: 13px; color: var(--muted); }
-    .export-bar p strong { color: var(--white); }
-    .btn-print {
-      font-size: 13px;
-      padding: 8px 18px;
-      border-radius: var(--radius-sm);
-      border: 1.5px solid #2a5f76;
-      background: transparent;
-      color: var(--white);
-      cursor: pointer;
-      font-family: inherit;
-      font-weight: 500;
-      transition: background 0.15s;
-    }
-    .btn-print:hover { background: var(--mid-bg); }
+    .no-data { padding:48px 24px; text-align:center; color:var(--muted); font-size:14px; background:var(--white); border-radius:var(--radius); border:1.5px dashed var(--border); }
+    .no-data p { margin-top:8px; font-size:13px; }
 
-    /* ── Footer ── */
-    .site-footer {
-      background: var(--dark-bg);
-      padding: 20px 24px;
-      text-align: center;
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 40px;
-    }
+    .notes-display { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; font-size:13px; color:var(--slate); line-height:1.6; white-space:pre-wrap; margin-top:8px; }
+    .incomplete-msg { font-size:14px; color:var(--muted); padding:40px 0; text-align:center; }
 
-    /* ── Responsive ── */
-    @media (max-width: 680px) {
-      .grid-header, .process-row {
-        grid-template-columns: 1fr;
-        gap: 4px;
-      }
-      .grid-header { display: none; }
-      .process-name { padding-bottom: 4px; }
-      .score-cell { height: 38px; }
-      .summary-grid { grid-template-columns: 1fr 1fr; }
-      .heatmap-label { width: 110px; font-size: 12px; }
-      .header-badge { display: none; }
-    }
+    .stage-guide-row { display:grid; grid-template-columns:100px 1fr; gap:16px; margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid var(--border); }
+    .stage-guide-row:last-child { border-bottom:none; }
+    .stage-badge-lg { font-size:12px; font-weight:600; padding:6px 10px; border-radius:var(--radius-sm); text-align:center; border:1.5px solid transparent; }
+    .stage-guide-desc { font-size:13px; color:var(--slate); line-height:1.7; }
+    .stage-guide-desc strong { font-weight:600; color:var(--charcoal); }
+    .signal-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:8px; margin-top:10px; }
+    .signal-card { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius-sm); padding:10px 14px; font-size:12px; color:var(--slate); }
+    .signal-card strong { display:block; font-size:11px; font-weight:600; color:var(--charcoal); margin-bottom:4px; }
 
-    @media print {
-      .tabs, .btn-row, .export-bar, .site-footer { display: none; }
-      .view { display: block !important; }
-      .site-header { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    .export-bar { background:var(--dark-bg); border-radius:var(--radius); padding:14px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:32px; flex-wrap:wrap; }
+    .export-bar p { font-size:13px; color:var(--muted); }
+    .export-bar p strong { color:var(--white); }
+    .btn-print { font-size:13px; padding:8px 18px; border-radius:var(--radius-sm); border:1.5px solid #2a5f76; background:transparent; color:var(--white); cursor:pointer; font-family:inherit; font-weight:500; transition:background 0.15s; }
+    .btn-print:hover { background:var(--mid-bg); }
+    .site-footer { background:var(--dark-bg); padding:20px 24px; text-align:center; font-size:12px; color:var(--muted); margin-top:40px; }
+
+    @media(max-width:680px){
+      .grid-header,.process-row{grid-template-columns:1fr;gap:4px;}
+      .grid-header{display:none;}
+      .summary-grid{grid-template-columns:1fr 1fr;}
+      .heatmap-label{width:120px;font-size:12px;}
+      .header-right{display:none;}
+    }
+    @media print{
+      .tabs,.btn-row,.export-bar,.site-footer,.refresh-bar,.name-section{display:none;}
+      .view{display:block!important;}
     }
   </style>
 </head>
@@ -447,24 +196,35 @@
       <h1>Automation Maturity Self-Assessment</h1>
       <p>Score your organisation across key service management process areas</p>
     </div>
-    <div class="header-badge">Hornbill Connect</div>
+    <div class="header-right">
+      <div class="header-badge">Hornbill Workshop</div>
+      <div class="live-badge"><div class="live-dot"></div>Live session</div>
+    </div>
   </div>
 </header>
 
 <main class="main">
+
+  <div class="name-section">
+    <label for="pname">Your name:</label>
+    <input type="text" id="pname" placeholder="Enter your name — required to appear in the group heatmap" autocomplete="off" />
+    <span class="name-hint">Shared with all participants</span>
+  </div>
+
   <div class="tabs">
     <button class="tab active" onclick="switchTab('assess')">Self-assessment</button>
-    <button class="tab" onclick="switchTab('results')">Results &amp; heatmap</button>
+    <button class="tab" onclick="switchTab('results')">My results</button>
+    <button class="tab" onclick="switchTab('group')">Group heatmap <span class="tab-badge" id="p-badge">0</span></button>
     <button class="tab" onclick="switchTab('guide')">Stage reference</button>
   </div>
 
-  <!-- ── ASSESS ── -->
+  <!-- ASSESS -->
   <div id="view-assess" class="view active">
     <div class="instruction-box">
-      Score each process area from <strong>1 (undefined)</strong> to <strong>5 (end-to-end automated)</strong>.
-      Score where you <strong>are today</strong>, not where you want to be. Leave blank if a process area doesn't apply.
+      Score each area <strong>1 (undefined)</strong> to <strong>5 (end-to-end automated)</strong>. Score where you are <strong>today</strong>, not the aspiration.
+      If a process area <strong>doesn't apply</strong> to your organisation (e.g. you don't run Problem management), simply <strong>leave it blank</strong> — it will show as <em>N/A</em> and will <strong>not affect your score or the group average</strong>.
+      Enter your name above, then hit <em>Save to group heatmap</em>.
     </div>
-
     <div class="stage-legend">
       <span class="stage-pill sp-1">1 – Undefined</span>
       <span class="stage-pill sp-2">2 – Defined</span>
@@ -472,7 +232,6 @@
       <span class="stage-pill sp-4">4 – Partial automation</span>
       <span class="stage-pill sp-5">5 – End-to-end</span>
     </div>
-
     <div class="grid-header">
       <div></div>
       <div class="gh-stage sp-1">1<br>Undefined</div>
@@ -481,266 +240,416 @@
       <div class="gh-stage sp-4">4<br>Partial</div>
       <div class="gh-stage sp-5">5<br>End-to-end</div>
     </div>
-
     <div id="rows-container"></div>
-
     <div class="divider"></div>
-
     <div class="note-area">
-      <label>Notes &amp; observations (capture blockers, disagreements, context)</label>
-      <textarea id="team-notes" placeholder="e.g. 'Incident management scored Stage 2 — we have a process document but agents mostly work from email. The main blocker is lack of time to migrate into Hornbill BPM...'"></textarea>
+      <label>Notes &amp; observations (blockers, context, anything worth capturing)</label>
+      <textarea id="tnotes" placeholder="e.g. 'Incident management scored Stage 2 — we have a process doc but agents work from email. Main blocker: no time to build the BPM yet...'"></textarea>
     </div>
-
     <div class="btn-row">
-      <button class="btn btn-primary" onclick="switchTab('results')">View results →</button>
-      <button class="btn btn-ghost" onclick="resetAll()">Reset scores</button>
+      <button class="btn btn-primary" onclick="switchTab('results')">View my results →</button>
+      <button class="btn btn-orange" onclick="saveToGroup()" id="save-btn">Save to group heatmap</button>
+      <span class="save-status" id="save-status"></span>
+      <button class="btn btn-ghost" onclick="resetAll()">Reset</button>
     </div>
   </div>
 
-  <!-- ── RESULTS ── -->
+  <!-- MY RESULTS -->
   <div id="view-results" class="view">
     <div id="results-content"></div>
   </div>
 
-  <!-- ── GUIDE ── -->
+  <!-- GROUP HEATMAP -->
+  <div id="view-group" class="view">
+    <div class="group-header">
+      <div class="group-header-left">
+        <h2>Group heatmap</h2>
+        <p>Live view of all participant scores — auto-refreshes every 20 seconds</p>
+      </div>
+      <span class="participant-count" id="group-count">0 participants</span>
+    </div>
+    <div class="refresh-bar">
+      <button class="btn btn-sm" onclick="loadGroup()">↻ Refresh now</button>
+      <span class="last-refresh" id="last-refresh"></span>
+      <button class="btn btn-sm btn-ghost" onclick="clearMyScore()" style="margin-left:auto;">Remove my score</button>
+    </div>
+    <div id="group-content">
+      <div class="no-data"><strong>No submissions yet</strong><p>Scores appear here as participants save their assessment.</p></div>
+    </div>
+  </div>
+
+  <!-- GUIDE -->
   <div id="view-guide" class="view">
-    <div style="margin-bottom: 24px;">
-      <p style="font-size: 14px; color: var(--slate); line-height: 1.7; margin-bottom: 20px;">
-        Use these descriptions to calibrate your scores. The "what you'll hear" phrases are the fastest way to recognise which stage you're actually at — not where you'd like to be.
-      </p>
-
-      <div class="stage-guide-row">
-        <div class="stage-badge-lg sp-1">Stage 1<br>Undefined</div>
-        <div>
-          <div class="stage-guide-desc"><strong>Processes lack structure and documentation.</strong> Outcomes depend entirely on individual knowledge and experience. Two agents handle the same request differently. There is no consistent categorisation, no enforced SLAs, and no meaningful reporting.</div>
-          <div class="signal-grid" style="margin-top:10px;">
-            <div class="signal-card"><strong>What you'll hear</strong>"It depends on who's on."</div>
-            <div class="signal-card"><strong>What you'll see</strong>No queue visibility. Tickets arrive by email or phone.</div>
-            <div class="signal-card"><strong>Risk</strong>Key knowledge walks out the door when agents leave.</div>
-          </div>
+    <p style="font-size:14px;color:var(--slate);line-height:1.7;margin-bottom:20px;">Use these to calibrate your scores. The "what you'll hear" phrases are the fastest signal for each stage.</p>
+    <div class="stage-guide-row">
+      <div class="stage-badge-lg sp-1">Stage 1<br>Undefined</div>
+      <div>
+        <div class="stage-guide-desc"><strong>No structure or documentation.</strong> Outcomes depend entirely on individual knowledge. Agents handle the same request differently every time.</div>
+        <div class="signal-grid" style="margin-top:10px;">
+          <div class="signal-card"><strong>What you'll hear</strong>"It depends on who's on."</div>
+          <div class="signal-card"><strong>What you'll see</strong>No queue visibility. Requests via email/phone only.</div>
+          <div class="signal-card"><strong>Risk</strong>Knowledge walks out the door when people leave.</div>
         </div>
       </div>
-
-      <div class="stage-guide-row">
-        <div class="stage-badge-lg sp-2">Stage 2<br>Defined</div>
-        <div>
-          <div class="stage-guide-desc"><strong>Processes are documented but not digitalised.</strong> Procedures exist in SharePoint, Confluence, or a wiki. Teams know about them but don't consistently follow them. The system doesn't enforce the process — discipline does.</div>
-          <div class="signal-grid" style="margin-top:10px;">
-            <div class="signal-card"><strong>What you'll hear</strong>"We have a document for that, but nobody really follows it."</div>
-            <div class="signal-card"><strong>What you'll see</strong>SLAs exist on paper. Approvals happen via email.</div>
-            <div class="signal-card"><strong>Risk</strong>Documentation goes stale fast. Compliance audits are stressful.</div>
-          </div>
+    </div>
+    <div class="stage-guide-row">
+      <div class="stage-badge-lg sp-2">Stage 2<br>Defined</div>
+      <div>
+        <div class="stage-guide-desc"><strong>Processes documented but not digitalised.</strong> Procedures exist in SharePoint or Confluence. Teams know about them but don't consistently follow them.</div>
+        <div class="signal-grid" style="margin-top:10px;">
+          <div class="signal-card"><strong>What you'll hear</strong>"We have a document, but nobody really follows it."</div>
+          <div class="signal-card"><strong>What you'll see</strong>SLAs on paper. Approvals via email. Stale wikis.</div>
+          <div class="signal-card"><strong>Risk</strong>Compliance audits are stressful. Data lives in spreadsheets.</div>
         </div>
       </div>
-
-      <div class="stage-guide-row">
-        <div class="stage-badge-lg sp-3">Stage 3<br>Digital workflow</div>
-        <div>
-          <div class="stage-guide-desc"><strong>Processes run inside Hornbill as structured BPM workflows.</strong> Agents are guided step by step. Outcomes are consistent regardless of who handles the ticket. SLAs are tracked by the system. Reporting becomes meaningful for the first time. <em>Most mature Hornbill customers are here.</em></div>
-          <div class="signal-grid" style="margin-top:10px;">
-            <div class="signal-card"><strong>What you'll hear</strong>"Every ticket goes through the same workflow in Hornbill."</div>
-            <div class="signal-card"><strong>What you'll see</strong>Real-time queue dashboards. SLA breach alerts from the system.</div>
-            <div class="signal-card"><strong>Foundation</strong>This is the prerequisite for all automation above.</div>
-          </div>
+    </div>
+    <div class="stage-guide-row">
+      <div class="stage-badge-lg sp-3">Stage 3<br>Digital workflow</div>
+      <div>
+        <div class="stage-guide-desc"><strong>Process runs as a structured BPM workflow in Hornbill.</strong> Agents guided step by step. SLAs tracked by the system. Reporting is meaningful. <em>Most mature Hornbill customers are here.</em></div>
+        <div class="signal-grid" style="margin-top:10px;">
+          <div class="signal-card"><strong>What you'll hear</strong>"Every ticket goes through the same Hornbill workflow."</div>
+          <div class="signal-card"><strong>What you'll see</strong>Real-time dashboards. SLA breach alerts. Consistent outcomes.</div>
+          <div class="signal-card"><strong>Foundation</strong>Required before any automation above can be added.</div>
         </div>
       </div>
-
-      <div class="stage-guide-row">
-        <div class="stage-badge-lg sp-4">Stage 4<br>Partial automation</div>
-        <div>
-          <div class="stage-guide-desc"><strong>Automated steps run alongside human decision-making.</strong> Auto-assignment, notifications, and third-party integrations (AD, SCCM, Intune) handle routine mechanics. Agents focus on diagnosis and decisions. The balance between automated and human steps is actively managed.</div>
-          <div class="signal-grid" style="margin-top:10px;">
-            <div class="signal-card"><strong>What you'll hear</strong>"Auto-assignment and notifications run automatically."</div>
-            <div class="signal-card"><strong>What you'll see</strong>Integrations active. Agents handle exceptions, not admin.</div>
-            <div class="signal-card"><strong>Watch out</strong>Don't add automation before Stage 3 is stable.</div>
-          </div>
+    </div>
+    <div class="stage-guide-row">
+      <div class="stage-badge-lg sp-4">Stage 4<br>Partial automation</div>
+      <div>
+        <div class="stage-guide-desc"><strong>Automated steps alongside human decisions.</strong> Auto-assignment, notifications, and integrations (AD, SCCM, Intune) handle routine work. Humans handle decisions and exceptions.</div>
+        <div class="signal-grid" style="margin-top:10px;">
+          <div class="signal-card"><strong>What you'll hear</strong>"Auto-assignment and notifications run automatically."</div>
+          <div class="signal-card"><strong>What you'll see</strong>Integrations active. Agents focus on judgment, not admin.</div>
+          <div class="signal-card"><strong>Watch out</strong>Don't add automation before Stage 3 is stable.</div>
         </div>
       </div>
-
-      <div class="stage-guide-row">
-        <div class="stage-badge-lg sp-5">Stage 5<br>End-to-end</div>
-        <div>
-          <div class="stage-guide-desc"><strong>Processes run from initiation to resolution with minimal human involvement.</strong> High-volume, low-risk, well-understood processes (password resets, standard access requests) execute fully automatically. Human intervention is only required for genuine exceptions.</div>
-          <div class="signal-grid" style="margin-top:10px;">
-            <div class="signal-card"><strong>What you'll hear</strong>"That request type runs without anyone touching it."</div>
-            <div class="signal-card"><strong>What you'll see</strong>Zero-touch fulfilment for defined request categories.</div>
-            <div class="signal-card"><strong>Note</strong>Not every process should reach Stage 5 — nor needs to.</div>
-          </div>
+    </div>
+    <div class="stage-guide-row">
+      <div class="stage-badge-lg sp-5">Stage 5<br>End-to-end</div>
+      <div>
+        <div class="stage-guide-desc"><strong>Process runs start to finish with minimal human involvement.</strong> High-volume, low-risk processes (password resets, standard access) execute fully automatically.</div>
+        <div class="signal-grid" style="margin-top:10px;">
+          <div class="signal-card"><strong>What you'll hear</strong>"That request type runs without anyone touching it."</div>
+          <div class="signal-card"><strong>What you'll see</strong>Zero-touch fulfilment for defined categories.</div>
+          <div class="signal-card"><strong>Note</strong>Not every process should reach Stage 5.</div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="export-bar">
-    <p><strong>Sharing your results?</strong> Use your browser's print function to save as PDF, or screenshot the Results tab.</p>
+    <p><strong>Facilitator?</strong> Open the Group Heatmap tab to see all submissions live. Refresh to see new entries.</p>
     <button class="btn-print" onclick="window.print()">Print / Save as PDF</button>
   </div>
 </main>
 
 <footer class="site-footer">
-  Hornbill Connect &nbsp;·&nbsp; Automation Maturity Self-Assessment &nbsp;·&nbsp; hornbill.com
+  Hornbill Workshop Series &nbsp;·&nbsp; Automation Maturity Self-Assessment &nbsp;·&nbsp; hornbill.com
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
-  const PROCESSES = [
-    { id: 'incident',  name: 'Incident management',      sub: 'Break/fix, outages' },
-    { id: 'request',   name: 'Service requests',          sub: 'Standard requests, access' },
-    { id: 'change',    name: 'Change management',         sub: 'RFC, CAB, approvals' },
-    { id: 'problem',   name: 'Problem management',        sub: 'Root cause, known errors' },
-    { id: 'asset',     name: 'Asset & CMDB',              sub: 'Hardware, software, CIs' },
-    { id: 'onboard',   name: 'Onboarding / offboarding',  sub: 'Joiner/mover/leaver' },
-    { id: 'knowledge', name: 'Knowledge management',      sub: 'Articles, self-service' },
-    { id: 'reporting', name: 'Reporting & analytics',     sub: 'SLAs, dashboards, metrics' },
-  ];
+const PROCS = [
+  {id:'incident', name:'Incident management',     sub:'Break/fix, outages'},
+  {id:'request',  name:'Service requests',         sub:'Standard requests, access'},
+  {id:'change',   name:'Change management',        sub:'RFC, CAB, approvals'},
+  {id:'problem',  name:'Problem management',       sub:'Root cause, known errors'},
+  {id:'asset',    name:'Asset & CMDB',             sub:'Hardware, software, CIs'},
+  {id:'onboard',  name:'Onboarding / offboarding', sub:'Joiner/mover/leaver'},
+  {id:'knowledge',name:'Knowledge management',     sub:'Articles, self-service'},
+  {id:'reporting',name:'Reporting & analytics',    sub:'SLAs, dashboards, metrics'},
+];
+const SN=['','Undefined','Defined','Digital workflow','Partial auto','End-to-end'];
+const SBar=['','#B4B2A9','#85B7EB','#97C459','#EF9F27','#AFA9EC'];
+const STxt=['','#444441','#0C447C','#27500A','#633806','#3C3489'];
+const SBg =['','#F1EFE8','#E6F1FB','#EAF3DE','#FAEEDA','#EEEDFE'];
+const SBd =['','#B4B2A9','#85B7EB','#97C459','#EF9F27','#AFA9EC'];
 
-  const STAGE_NAMES = ['', 'Undefined', 'Defined', 'Digital workflow', 'Partial auto', 'End-to-end'];
-  const STAGE_COLORS = {
-    1: { bg: '#F1EFE8', bar: '#B4B2A9', text: '#444441' },
-    2: { bg: '#E6F1FB', bar: '#85B7EB', text: '#0C447C' },
-    3: { bg: '#EAF3DE', bar: '#97C459', text: '#27500A' },
-    4: { bg: '#FAEEDA', bar: '#EF9F27', text: '#633806' },
-    5: { bg: '#EEEDFE', bar: '#AFA9EC', text: '#3C3489' },
-  };
+const scores={};
+let autoTimer=null;
 
-  const scores = {};
+function renderRows(){
+  const c=document.getElementById('rows-container');
+  c.innerHTML=PROCS.map(p=>{
+    const hasScore=scores[p.id]!==undefined;
+    const cells=[1,2,3,4,5].map(s=>`<div class="score-cell ${scores[p.id]===s?'sel-'+s:''}" onclick="setScore('${p.id}',${s})" tabindex="0">${s}</div>`).join('');
+    const naTag=hasScore?'':` <span style="font-size:10px;font-weight:600;color:var(--muted);background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:1px 6px;vertical-align:middle;margin-left:4px;">N/A</span>`;
+    return `<div class="process-row"><div class="process-name">${p.name}${naTag}<div class="process-sub">${p.sub}</div></div>${cells}</div>`;
+  }).join('');
+  c.querySelectorAll('.score-cell').forEach(el=>el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click();}}));
+}
 
-  function renderRows() {
-    const container = document.getElementById('rows-container');
-    container.innerHTML = PROCESSES.map(proc => {
-      const cells = [1, 2, 3, 4, 5].map(s => {
-        const sel = scores[proc.id] === s ? `sel-${s}` : '';
-        return `<div class="score-cell ${sel}" onclick="setScore('${proc.id}', ${s})" role="button" tabindex="0" aria-label="Stage ${s}">${s}</div>`;
-      }).join('');
-      return `<div class="process-row">
-        <div class="process-name">${proc.name}<div class="process-sub">${proc.sub}</div></div>
-        ${cells}
-      </div>`;
-    }).join('');
-
-    // keyboard support
-    container.querySelectorAll('.score-cell').forEach(cell => {
-      cell.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); cell.click(); } });
-    });
-  }
-
-  function setScore(id, val) {
-    scores[id] = scores[id] === val ? undefined : val;
-    if (scores[id] === undefined) delete scores[id];
-    renderRows();
-  }
-
-  function resetAll() {
-    Object.keys(scores).forEach(k => delete scores[k]);
-    document.getElementById('team-notes').value = '';
-    renderRows();
-    switchTab('assess');
-  }
-
-  function switchTab(tab) {
-    document.querySelectorAll('.tab').forEach((t, i) => {
-      t.classList.toggle('active', ['assess','results','guide'][i] === tab);
-    });
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.getElementById('view-' + tab).classList.add('active');
-    if (tab === 'results') renderResults();
-  }
-
-  function renderResults() {
-    const el = document.getElementById('results-content');
-    const scored = PROCESSES.filter(p => scores[p.id] !== undefined);
-    const notes = document.getElementById('team-notes').value.trim();
-
-    if (scored.length === 0) {
-      el.innerHTML = `<p class="incomplete-msg">Complete the self-assessment first — score at least one process area, then return here.</p>`;
-      return;
-    }
-
-    const vals = scored.map(p => scores[p.id]);
-    const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
-    const min = Math.min(...vals);
-    const max = Math.max(...vals);
-    const priority = scored.filter(p => scores[p.id] <= 2).length;
-    const sorted = [...scored].sort((a, b) => scores[a.id] - scores[b.id]);
-
-    let html = `<div class="results-title">Assessment results</div>`;
-
-    // Summary cards
-    html += `<div class="summary-grid">
-      <div class="metric-card">
-        <div class="metric-label">Average maturity stage</div>
-        <div class="metric-value">${avg.toFixed(1)}</div>
-        <div class="metric-sub">across ${scored.length} process areas</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">Score range</div>
-        <div class="metric-value">${min} – ${max}</div>
-        <div class="metric-sub">lowest to highest stage</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">Priority areas</div>
-        <div class="metric-value">${priority}</div>
-        <div class="metric-sub">at Stage 1 or 2</div>
-      </div>
-    </div>`;
-
-    // Heatmap
-    html += `<div class="heatmap">`;
-    sorted.forEach(proc => {
-      const s = scores[proc.id];
-      const c = STAGE_COLORS[s];
-      const pct = Math.round((s / 5) * 100);
-      html += `<div class="heatmap-row">
-        <div class="heatmap-label">${proc.name}</div>
-        <div class="heatmap-track">
-          <div class="heatmap-fill" style="width:${pct}%;background:${c.bar};color:${c.text};">${STAGE_NAMES[s]}</div>
-        </div>
-        <div class="heatmap-score">Stage ${s}</div>
-      </div>`;
-    });
-    html += `</div>`;
-
-    // Focus recommendations
-    const high = sorted.filter(p => scores[p.id] <= 2);
-    const med  = sorted.filter(p => scores[p.id] === 3);
-    const good = sorted.filter(p => scores[p.id] >= 4);
-
-    html += `<div class="focus-section"><div class="focus-title">Recommendations</div>`;
-    high.forEach(p => {
-      html += `<div class="focus-row">
-        <div class="focus-proc">${p.name} <span>— currently Stage ${scores[p.id]}, target Stage ${scores[p.id] + 1}</span></div>
-        <span class="focus-badge badge-high">High priority</span>
-      </div>`;
-    });
-    med.forEach(p => {
-      html += `<div class="focus-row">
-        <div class="focus-proc">${p.name} <span>— currently Stage 3, ready for automation</span></div>
-        <span class="focus-badge badge-med">Optimise</span>
-      </div>`;
-    });
-    good.forEach(p => {
-      html += `<div class="focus-row">
-        <div class="focus-proc">${p.name} <span>— currently Stage ${scores[p.id]}</span></div>
-        <span class="focus-badge badge-good">Mature</span>
-      </div>`;
-    });
-    html += `</div>`;
-
-    if (notes) {
-      html += `<div class="divider"></div>
-        <div class="focus-title">Session notes</div>
-        <div class="notes-display">${notes}</div>`;
-    }
-
-    html += `<div class="btn-row" style="margin-top:24px;">
-      <button class="btn btn-primary" onclick="switchTab('assess')">← Back to assessment</button>
-      <button class="btn btn-ghost" onclick="window.print()">Print / Save as PDF</button>
-    </div>`;
-
-    el.innerHTML = html;
-  }
-
-  // Init
+function setScore(id,val){
+  scores[id]=scores[id]===val?undefined:val;
+  if(scores[id]===undefined)delete scores[id];
   renderRows();
+  setSS('');
+}
+
+function resetAll(){Object.keys(scores).forEach(k=>delete scores[k]);document.getElementById('tnotes').value='';setSS('');renderRows();}
+function setSS(msg,cls=''){const e=document.getElementById('save-status');e.textContent=msg;e.className='save-status'+(cls?' '+cls:'');}
+
+function switchTab(tab){
+  const tabs=['assess','results','group','guide'];
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',tabs[i]===tab));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+tab).classList.add('active');
+  if(tab==='results')renderMyResults();
+  if(tab==='group'){loadGroup();startAuto();}else stopAuto();
+}
+
+function renderMyResults(){
+  const el=document.getElementById('results-content');
+  const sc=PROCS.filter(p=>scores[p.id]!==undefined);
+  const na=PROCS.filter(p=>scores[p.id]===undefined);
+  if(!sc.length){el.innerHTML='<p class="incomplete-msg">Complete the assessment first, then come back here.</p>';return;}
+  const vals=sc.map(p=>scores[p.id]);
+  const avg=vals.reduce((a,b)=>a+b,0)/vals.length;
+  const sorted=[...sc].sort((a,b)=>scores[a.id]-scores[b.id]);
+  const notes=document.getElementById('tnotes').value.trim();
+  const priority=sc.filter(p=>scores[p.id]<=2).length;
+
+  let h=`<div class="results-title">My results</div>
+  <div class="summary-grid">
+    <div class="metric-card"><div class="metric-label">Average stage</div><div class="metric-value">${avg.toFixed(1)}</div><div class="metric-sub">across ${sc.length} scored area${sc.length!==1?'s':''}</div></div>
+    <div class="metric-card"><div class="metric-label">Score range</div><div class="metric-value">${Math.min(...vals)} – ${Math.max(...vals)}</div><div class="metric-sub">lowest to highest scored</div></div>
+    <div class="metric-card"><div class="metric-label">Priority areas</div><div class="metric-value">${priority}</div><div class="metric-sub">at Stage 1 or 2</div></div>
+  </div><div class="heatmap">`;
+  sorted.forEach(p=>{
+    const s=scores[p.id],pct=Math.round((s/5)*100);
+    h+=`<div class="heatmap-row"><div class="heatmap-label">${p.name}</div><div class="heatmap-track"><div class="heatmap-fill" style="width:${pct}%;background:${SBar[s]};color:${STxt[s]};">${SN[s]}</div></div><div class="heatmap-score">Stage ${s}</div></div>`;
+  });
+  // N/A rows
+  na.forEach(p=>{
+    h+=`<div class="heatmap-row"><div class="heatmap-label" style="color:var(--muted);">${p.name}</div><div class="heatmap-track" style="display:flex;align-items:center;padding-left:12px;"><span style="font-size:12px;color:var(--muted);font-style:italic;">Not applicable — excluded from score</span></div><div class="heatmap-score" style="color:var(--muted);">N/A</div></div>`;
+  });
+  h+=`</div><div class="focus-section"><div class="focus-title">Recommendations</div>`;
+  sorted.filter(p=>scores[p.id]<=2).forEach(p=>{h+=`<div class="focus-row"><div class="focus-proc">${p.name} <span>— Stage ${scores[p.id]}, target Stage ${scores[p.id]+1}</span></div><span class="focus-badge badge-high">High priority</span></div>`;});
+  sorted.filter(p=>scores[p.id]===3).forEach(p=>{h+=`<div class="focus-row"><div class="focus-proc">${p.name} <span>— Stage 3, ready for automation</span></div><span class="focus-badge badge-med">Optimise</span></div>`;});
+  sorted.filter(p=>scores[p.id]>=4).forEach(p=>{h+=`<div class="focus-row"><div class="focus-proc">${p.name} <span>— Stage ${scores[p.id]}</span></div><span class="focus-badge badge-good">Mature</span></div>`;});
+  if(na.length) h+=`<div class="focus-row" style="opacity:0.6;"><div class="focus-proc" style="color:var(--muted);">${na.map(p=>p.name).join(', ')} <span>— not applicable, not counted</span></div></div>`;
+  h+=`</div>`;
+  if(notes)h+=`<div class="divider"></div><div class="focus-title">My notes</div><div class="notes-display">${notes}</div>`;
+  h+=`<div class="btn-row" style="margin-top:24px;"><button class="btn btn-primary" onclick="switchTab('assess')">← Back</button><button class="btn btn-orange" onclick="saveToGroup()">Save to group heatmap</button><button class="btn btn-ghost" onclick="window.print()">Print</button></div>`;
+  el.innerHTML=h;
+}
+
+// Storage wrappers — works in Claude artifact (window.storage) AND standalone (localStorage)
+async function sSave(key,val,shared){
+  if(window.storage){try{return await window.storage.set(key,JSON.stringify(val),shared);}catch(e){}}
+  else{localStorage.setItem(key,JSON.stringify(val));}
+}
+async function sGet(key,shared){
+  if(window.storage){try{const r=await window.storage.get(key,shared);return r?JSON.parse(r.value):null;}catch(e){return null;}}
+  else{const v=localStorage.getItem(key);return v?JSON.parse(v):null;}
+}
+async function sList(prefix,shared){
+  if(window.storage){try{const r=await window.storage.list(prefix,shared);return r?r.keys:[];}catch(e){return[];}}
+  else{return Object.keys(localStorage).filter(k=>k.startsWith(prefix));}
+}
+async function sDel(key,shared){
+  if(window.storage){try{await window.storage.delete(key,shared);}catch(e){}}
+  else{localStorage.removeItem(key);}
+}
+
+async function saveToGroup(){
+  const name=document.getElementById('pname').value.trim();
+  if(!name){alert('Please enter your name at the top first.');return;}
+  if(!Object.keys(scores).length){alert('Please score at least one area first.');return;}
+  setSS('Saving…','saving');
+  document.getElementById('save-btn').disabled=true;
+  const key='p:'+name.toLowerCase().replace(/[^a-z0-9]/g,'-');
+  try{
+    await sSave(key,{name,scores:{...scores},notes:document.getElementById('tnotes').value.trim(),at:new Date().toISOString()},true);
+    setSS('✓ Saved — visible in Group heatmap','saved');
+    refreshBadge();
+  }catch(e){setSS('Save failed, try again');}
+  document.getElementById('save-btn').disabled=false;
+}
+
+async function clearMyScore(){
+  const name=document.getElementById('pname').value.trim();
+  if(!name){alert('Enter your name to remove your score.');return;}
+  const key='p:'+name.toLowerCase().replace(/[^a-z0-9]/g,'-');
+  await sDel(key,true);
+  loadGroup();
+}
+
+async function refreshBadge(){
+  try{const keys=await sList('p:',true);document.getElementById('p-badge').textContent=keys.length;}catch(e){}
+}
+
+async function loadGroup(){
+  document.getElementById('last-refresh').innerHTML='<span class="spinner"></span>Loading…';
+  try{
+    const keys=await sList('p:',true);
+    const participants=[];
+    for(const k of keys){const d=await sGet(k,true);if(d&&d.name&&d.scores)participants.push(d);}
+    renderGroup(participants);
+    document.getElementById('last-refresh').textContent='Updated '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    document.getElementById('group-count').textContent=participants.length+' participant'+(participants.length!==1?'s':'');
+    document.getElementById('p-badge').textContent=participants.length;
+  }catch(e){
+    document.getElementById('last-refresh').textContent='Could not load';
+    document.getElementById('group-content').innerHTML=`<div class="no-data"><strong>Storage unavailable</strong><p>When hosted on GitHub Pages, use a backend (Supabase, Firebase, etc.) to collect shared scores. In the Claude.ai artifact environment this works automatically.</p></div>`;
+  }
+}
+
+let groupChartInstance = null;
+
+function renderGroup(participants){
+  const el=document.getElementById('group-content');
+  if(!participants.length){
+    el.innerHTML='<div class="no-data"><strong>No submissions yet</strong><p>Scores appear here as participants save their assessment.</p></div>';
+    return;
+  }
+
+  const stats=PROCS.map(p=>{
+    const pScores=participants.map(pt=>pt.scores[p.id]).filter(s=>s!==undefined);
+    if(!pScores.length)return{...p,avg:null,dist:{1:0,2:0,3:0,4:0,5:0},n:0};
+    const avg=pScores.reduce((a,b)=>a+b,0)/pScores.length;
+    const dist={1:0,2:0,3:0,4:0,5:0};
+    pScores.forEach(s=>dist[s]=(dist[s]||0)+1);
+    return{...p,avg,dist,n:pScores.length};
+  });
+
+  const scored=stats.filter(p=>p.n>0);
+  if(!scored.length){
+    el.innerHTML='<div class="no-data"><strong>No scored data yet</strong><p>Scores appear here as participants save their assessment.</p></div>';
+    return;
+  }
+  const allAvgs=scored.map(p=>p.avg);
+  const overallAvg=allAvgs.reduce((a,b)=>a+b,0)/allAvgs.length;
+  const byAvg=[...scored].sort((a,b)=>a.avg-b.avg);
+  const lowest=byAvg[0], highest=byAvg[byAvg.length-1];
+
+  let h=`<div class="insight-cards">
+    <div class="insight-card highlight">
+      <div class="insight-label">Group average stage</div>
+      <div class="insight-value teal">${overallAvg.toFixed(1)}</div>
+      <div class="insight-sub">${participants.length} participant${participants.length!==1?'s':''} &#183; ${scored.length} process area${scored.length!==1?'s':''}</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-label">Needs most attention</div>
+      <div class="insight-value sm">${lowest?.name||'&#8212;'}</div>
+      <div class="insight-sub">group avg Stage ${lowest?.avg?.toFixed(1)||'&#8212;'}</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-label">Most mature area</div>
+      <div class="insight-value sm">${highest?.name||'&#8212;'}</div>
+      <div class="insight-sub">group avg Stage ${highest?.avg?.toFixed(1)||'&#8212;'}</div>
+    </div>
+  </div>
+  <div class="focus-title" style="margin-bottom:16px;">Group maturity by process area</div>
+  <div style="background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px 20px 16px;">
+    <canvas id="group-chart" style="height:340px;width:100%;"></canvas>
+  </div>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">`;
+  [1,2,3,4,5].forEach(s=>{h+=`<div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--slate);"><div style="width:11px;height:11px;border-radius:3px;background:${SBar[s]};"></div>Stage ${s} &#8212; ${SN[s]}</div>`;});
+  h+=`<div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--slate);"><div style="width:20px;height:2.5px;background:#1E2D3A;border-radius:2px;"></div>Group avg</div>`;
+  h+=`</div>`;
+
+  el.innerHTML=h;
+
+  if(groupChartInstance){groupChartInstance.destroy();groupChartInstance=null;}
+
+  const chartProcs=[...scored].sort((a,b)=>a.avg-b.avg);
+  const labels=chartProcs.map(p=>p.name);
+  const stageColors=[null,'#B4B2A9','#85B7EB','#97C459','#EF9F27','#AFA9EC'];
+
+  const datasets=[1,2,3,4,5].map(s=>({
+    label:'Stage '+s,
+    data:chartProcs.map(p=>p.n>0?Math.round((p.dist[s]/p.n)*100):0),
+    backgroundColor:stageColors[s],
+    borderWidth:0,
+    stack:'dist',
+  }));
+
+  datasets.push({
+    type:'line',
+    label:'Group avg',
+    data:chartProcs.map(p=>Math.round(((p.avg-1)/4)*100)),
+    borderColor:'#1E2D3A',
+    borderWidth:2.5,
+    pointBackgroundColor:'#1E2D3A',
+    pointBorderColor:'#ffffff',
+    pointBorderWidth:2,
+    pointRadius:5,
+    pointHoverRadius:7,
+    tension:0.35,
+    fill:false,
+    stack:'line',
+    order:0,
+  });
+
+  const ctx=document.getElementById('group-chart').getContext('2d');
+  groupChartInstance=new Chart(ctx,{
+    type:'bar',
+    data:{labels,datasets},
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          callbacks:{
+            title:ctx=>ctx[0].label,
+            label:ctx=>{
+              if(ctx.dataset.label==='Group avg'){
+                const p=chartProcs[ctx.dataIndex];
+                return' Avg: Stage '+p.avg.toFixed(1);
+              }
+              const v=ctx.raw;
+              if(!v)return null;
+              const stageNum=parseInt(ctx.dataset.label.replace('Stage ',''));
+              const p=chartProcs[ctx.dataIndex];
+              const cnt=p.dist[stageNum]||0;
+              return' Stage '+stageNum+': '+cnt+' person'+(cnt!==1?'s':'')+' ('+v+'%)';
+            },
+            filter:ctx=>ctx.dataset.label==='Group avg'||ctx.raw>0,
+          },
+          backgroundColor:'#0D2B3E',
+          titleColor:'#FFFFFF',
+          bodyColor:'#7A9BAE',
+          padding:12,cornerRadius:6,
+        },
+      },
+      scales:{
+        x:{
+          stacked:true,
+          grid:{display:false},
+          border:{display:false},
+          ticks:{font:{size:11},color:'#4A6070',maxRotation:35,minRotation:20},
+        },
+        y:{
+          stacked:true,
+          min:0,max:100,
+          grid:{color:'#E8E4DF'},
+          border:{display:false},
+          ticks:{
+            font:{size:11},color:'#7A9BAE',stepSize:25,
+            callback:v=>{
+              if(v===0)return'Stage 1';
+              if(v===25)return'Stage 2';
+              if(v===50)return'Stage 3';
+              if(v===75)return'Stage 4';
+              if(v===100)return'Stage 5';
+              return'';
+            },
+          },
+        },
+      },
+    }
+  });
+}
+
+function startAuto(){stopAuto();autoTimer=setInterval(loadGroup,20000);}
+function stopAuto(){if(autoTimer){clearInterval(autoTimer);autoTimer=null;}}
+
+renderRows();
+refreshBadge();
 </script>
 </body>
 </html>
